@@ -6,8 +6,9 @@ import java.math.BigDecimal;
 import java.time.LocalDate;
 
 public class BudgetDtoIn {
-    private String nameDriver;
-    private String documentDriver;
+    private CustomerDtoIn customer;
+    private String driverName;
+    private String driverDocument;
     private boolean isMainDriver;
     @JsonFormat(pattern = "dd/MM/yyyy", shape=JsonFormat.Shape.STRING, locale = "pt-BR", timezone = "America/Fortaleza")
     private LocalDate birthdateDriver;
@@ -19,20 +20,28 @@ public class BudgetDtoIn {
     public BudgetDtoIn() {
     }
 
-    public String getNameDriver() {
-        return nameDriver;
+    public CustomerDtoIn getCustomer() {
+        return customer;
     }
 
-    public void setNameDriver(String nameDriver) {
-        this.nameDriver = nameDriver;
+    public void setCustomer(CustomerDtoIn customer) {
+        this.customer = customer;
     }
 
-    public String getDocumentDriver() {
-        return documentDriver;
+    public String getDriverName() {
+        return driverName;
     }
 
-    public void setDocumentDriver(String documentDriver) {
-        this.documentDriver = documentDriver;
+    public void setDriverName(String driverName) {
+        this.driverName = driverName;
+    }
+
+    public String getDriverDocument() {
+        return driverDocument;
+    }
+
+    public void setDriverDocument(String driverDocument) {
+        this.driverDocument = driverDocument;
     }
 
     public boolean isMainDriver() {

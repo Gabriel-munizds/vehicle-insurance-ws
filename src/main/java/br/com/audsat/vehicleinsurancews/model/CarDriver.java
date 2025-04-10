@@ -20,6 +20,15 @@ public class CarDriver {
     @Column(name = "is_main_driver", nullable = false)
     private boolean isMainDriver;
 
+    public CarDriver() {
+    }
+
+    public CarDriver(Car car, Driver driver, boolean isMainDriver) {
+        this.car = car;
+        this.driver = driver;
+        this.isMainDriver = isMainDriver;
+    }
+
     public Long getId() {
         return id;
     }

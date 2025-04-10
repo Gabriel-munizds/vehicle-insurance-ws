@@ -74,4 +74,61 @@ public class Insurance {
     public void setActive(boolean active) {
         isActive = active;
     }
+
+    public static final class InsuranceBuilder {
+        private Long id;
+        private Customer customer;
+        private LocalDateTime creationDate;
+        private LocalDateTime updatedAt;
+        private Car car;
+        private boolean isActive;
+
+        private InsuranceBuilder() {
+        }
+
+        public static InsuranceBuilder anInsurance() {
+            return new InsuranceBuilder();
+        }
+
+        public InsuranceBuilder id(Long id) {
+            this.id = id;
+            return this;
+        }
+
+        public InsuranceBuilder customer(Customer customer) {
+            this.customer = customer;
+            return this;
+        }
+
+        public InsuranceBuilder creationDate(LocalDateTime creationDate) {
+            this.creationDate = creationDate;
+            return this;
+        }
+
+        public InsuranceBuilder updatedAt(LocalDateTime updatedAt) {
+            this.updatedAt = updatedAt;
+            return this;
+        }
+
+        public InsuranceBuilder car(Car car) {
+            this.car = car;
+            return this;
+        }
+
+        public InsuranceBuilder isActive(boolean isActive) {
+            this.isActive = isActive;
+            return this;
+        }
+
+        public Insurance build() {
+            Insurance insurance = new Insurance();
+            insurance.setId(id);
+            insurance.setCustomer(customer);
+            insurance.setCreationDate(creationDate);
+            insurance.setUpdatedAt(updatedAt);
+            insurance.setCar(car);
+            insurance.isActive = this.isActive;
+            return insurance;
+        }
+    }
 }
