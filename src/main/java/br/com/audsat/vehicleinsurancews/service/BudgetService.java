@@ -7,8 +7,9 @@ import br.com.audsat.vehicleinsurancews.model.Car;
 import br.com.audsat.vehicleinsurancews.model.Customer;
 import br.com.audsat.vehicleinsurancews.model.Driver;
 import br.com.audsat.vehicleinsurancews.model.Insurance;
+import br.com.audsat.vehicleinsurancews.model.valueobjects.InsuranceValue;
+import br.com.audsat.vehicleinsurancews.model.valueobjects.RiskProfile;
 import br.com.audsat.vehicleinsurancews.repository.InsuranceRepository;
-import jakarta.persistence.criteria.CriteriaBuilder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -21,13 +22,17 @@ public class BudgetService {
     private final DriverService driverService;
     private final CarService carService;
     private final InsuranceRepository insuranceRepository;
+    private final InsuranceCalculatorService insuranceCalculatorService;
+    private final ClaimService claimService;
 
-    public BudgetService(GenericMapper genericMapper, CustomerService customerService, DriverService driverService, CarService carService, InsuranceRepository insuranceRepository) {
+    public BudgetService(GenericMapper genericMapper, CustomerService customerService, DriverService driverService, CarService carService, InsuranceRepository insuranceRepository, InsuranceCalculatorService insuranceCalculatorService, ClaimService claimService) {
         this.genericMapper = genericMapper;
         this.customerService = customerService;
         this.driverService = driverService;
         this.carService = carService;
         this.insuranceRepository = insuranceRepository;
+        this.insuranceCalculatorService = insuranceCalculatorService;
+        this.claimService = claimService;
     }
 
     @Transactional
@@ -35,11 +40,22 @@ public class BudgetService {
         Car car = carService.createCar(dto);
         Driver driver = driverService.createDriver(dto, car);
         Customer customer = customerService.createCustomer(dto.getCustomer(), driver);
+        RiskProfile riskProfile = getRiskProfile(driver, car, dto.getMainDriver());
+        InsuranceValue insuranceValue = insuranceCalculatorService.calculateInsuranceValue(car.getFipeValue(), riskProfile);
         Insurance insurance = Insurance.InsuranceBuilder.anInsurance()
                 .car(car).creationDate(LocalDateTime.now())
-                .customer(customer).isActive(true).build();
+                .customer(customer)
+                .insuranceValue(insuranceValue.getValue())
+                .aliquot(insuranceValue.getAliquot())
+                .isActive(true).build();
         insuranceRepository.save(insurance);
         return genericMapper.toObject(insurance, BudgetDtoOut.class);
+    }
+
+    private RiskProfile getRiskProfile(Driver driver, Car car, Boolean mainDriver) {
+        Boolean hasDriverClaims = claimService.hasDriverClaims(driver);
+        Boolean hasVehicleClaims = claimService.hasVehicleClaims(car);
+        return new RiskProfile(driver.getBirthdate(), mainDriver, hasDriverClaims, hasVehicleClaims);
     }
 
     public BudgetDtoOut findBudgetByInsuranceId(Long insuranceId) {

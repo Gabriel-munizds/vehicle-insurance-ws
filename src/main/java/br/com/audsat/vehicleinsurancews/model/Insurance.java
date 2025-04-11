@@ -1,6 +1,7 @@
 package br.com.audsat.vehicleinsurancews.model;
 import jakarta.persistence.*;
 
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
 @Entity
@@ -25,7 +26,11 @@ public class Insurance {
     private Car car;
 
     @Column(name = "is_active", nullable = false)
-    private boolean isActive;
+    private Boolean isActive;
+    @Column(name = "aliquot")
+    private BigDecimal aliquot;
+    @Column(name = "insurance_value")
+    private BigDecimal insuranceValue;
 
     public Long getId() {
         return id;
@@ -67,12 +72,28 @@ public class Insurance {
         this.car = car;
     }
 
-    public boolean isActive() {
+    public Boolean isActive() {
         return isActive;
     }
 
-    public void setActive(boolean active) {
+    public void setActive(Boolean active) {
         isActive = active;
+    }
+
+    public BigDecimal getInsuranceValue() {
+        return insuranceValue;
+    }
+
+    public void setInsuranceValue(BigDecimal insuranceValue) {
+        this.insuranceValue = insuranceValue;
+    }
+
+    public BigDecimal getAliquot() {
+        return aliquot;
+    }
+
+    public void setAliquot(BigDecimal aliquot) {
+        this.aliquot = aliquot;
     }
 
     public static final class InsuranceBuilder {
@@ -81,7 +102,9 @@ public class Insurance {
         private LocalDateTime creationDate;
         private LocalDateTime updatedAt;
         private Car car;
-        private boolean isActive;
+        private Boolean isActive;
+        private BigDecimal aliquot;
+        private BigDecimal insuranceValue;
 
         private InsuranceBuilder() {
         }
@@ -115,8 +138,18 @@ public class Insurance {
             return this;
         }
 
-        public InsuranceBuilder isActive(boolean isActive) {
+        public InsuranceBuilder isActive(Boolean isActive) {
             this.isActive = isActive;
+            return this;
+        }
+
+        public InsuranceBuilder aliquot(BigDecimal aliquot) {
+            this.aliquot = aliquot;
+            return this;
+        }
+
+        public InsuranceBuilder insuranceValue(BigDecimal insuranceValue) {
+            this.insuranceValue = insuranceValue;
             return this;
         }
 
@@ -127,6 +160,8 @@ public class Insurance {
             insurance.setCreationDate(creationDate);
             insurance.setUpdatedAt(updatedAt);
             insurance.setCar(car);
+            insurance.setAliquot(aliquot);
+            insurance.setInsuranceValue(insuranceValue);
             insurance.isActive = this.isActive;
             return insurance;
         }

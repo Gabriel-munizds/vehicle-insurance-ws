@@ -9,7 +9,7 @@ public class BudgetDtoIn {
     private CustomerDtoIn customer;
     private String driverName;
     private String driverDocument;
-    private boolean isMainDriver;
+    private Boolean isMainDriver;
     @JsonFormat(pattern = "dd/MM/yyyy", shape=JsonFormat.Shape.STRING, locale = "pt-BR", timezone = "America/Fortaleza")
     private LocalDate birthdateDriver;
     private String modelCar;
@@ -44,11 +44,11 @@ public class BudgetDtoIn {
         this.driverDocument = driverDocument;
     }
 
-    public boolean isMainDriver() {
+    public Boolean getMainDriver() {
         return isMainDriver;
     }
 
-    public void setMainDriver(boolean mainDriver) {
+    public void setMainDriver(Boolean mainDriver) {
         isMainDriver = mainDriver;
     }
 

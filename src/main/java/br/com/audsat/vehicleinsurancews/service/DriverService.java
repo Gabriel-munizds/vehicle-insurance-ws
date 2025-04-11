@@ -23,7 +23,7 @@ public class DriverService {
     protected Driver createDriver(BudgetDtoIn dto, Car car) {
         Driver driver = genericMapper.toObject(dto, Driver.class);
         driverRepository.save(driver);
-        CarDriver carDriver = new CarDriver(car, driver, dto.isMainDriver());
+        CarDriver carDriver = new CarDriver(car, driver, dto.getMainDriver());
         carDriverRepository.save(carDriver);
         return driver;
     }

@@ -1,25 +1,29 @@
 package br.com.audsat.vehicleinsurancews.dto;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import jakarta.persistence.Column;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 public class BudgetDtoOut {
     private Long id;
-    private Long idDriver;
     private String nameDriver;
     private String documentDriver;
-    private boolean isMainDriver;
+    private Boolean isMainDriver;
     @JsonFormat(pattern = "dd/MM/yyyy", shape=JsonFormat.Shape.STRING, locale = "pt-BR", timezone = "America/Fortaleza")
     private LocalDate birthdateDriver;
-    private Long idCar;
     private String modelCar;
     private String manufacturerCar;
     private Integer modelYearCar;
     private BigDecimal fipeValueCar;
     private BigDecimal aliquot;
-    private BigDecimal budgetValue;
+    private BigDecimal insuranceValue;
+    @JsonFormat(pattern = "dd/MM/yyyy HH:mm:ss", shape=JsonFormat.Shape.STRING, locale = "pt-BR", timezone = "America/Fortaleza")
+    private LocalDateTime creationDate;
+    @JsonFormat(pattern = "dd/MM/yyyy HH:mm:ss", shape=JsonFormat.Shape.STRING, locale = "pt-BR", timezone = "America/Fortaleza")
+    private LocalDateTime updatedAt;
 
     public Long getId() {
         return id;
@@ -27,14 +31,6 @@ public class BudgetDtoOut {
 
     public void setId(Long id) {
         this.id = id;
-    }
-
-    public Long getIdDriver() {
-        return idDriver;
-    }
-
-    public void setIdDriver(Long idDriver) {
-        this.idDriver = idDriver;
     }
 
     public String getNameDriver() {
@@ -53,11 +49,11 @@ public class BudgetDtoOut {
         this.documentDriver = documentDriver;
     }
 
-    public boolean isMainDriver() {
+    public Boolean getMainDriver() {
         return isMainDriver;
     }
 
-    public void setMainDriver(boolean mainDriver) {
+    public void setMainDriver(Boolean mainDriver) {
         isMainDriver = mainDriver;
     }
 
@@ -67,14 +63,6 @@ public class BudgetDtoOut {
 
     public void setBirthdateDriver(LocalDate birthdateDriver) {
         this.birthdateDriver = birthdateDriver;
-    }
-
-    public Long getIdCar() {
-        return idCar;
-    }
-
-    public void setIdCar(Long idCar) {
-        this.idCar = idCar;
     }
 
     public String getModelCar() {
@@ -117,11 +105,27 @@ public class BudgetDtoOut {
         this.aliquot = aliquot;
     }
 
-    public BigDecimal getBudgetValue() {
-        return budgetValue;
+    public BigDecimal getInsuranceValue() {
+        return insuranceValue;
     }
 
-    public void setBudgetValue(BigDecimal budgetValue) {
-        this.budgetValue = budgetValue;
+    public void setInsuranceValue(BigDecimal insuranceValue) {
+        this.insuranceValue = insuranceValue;
+    }
+
+    public LocalDateTime getCreationDate() {
+        return creationDate;
+    }
+
+    public void setCreationDate(LocalDateTime creationDate) {
+        this.creationDate = creationDate;
+    }
+
+    public LocalDateTime getUpdatedAt() {
+        return updatedAt;
+    }
+
+    public void setUpdatedAt(LocalDateTime updatedAt) {
+        this.updatedAt = updatedAt;
     }
 }
