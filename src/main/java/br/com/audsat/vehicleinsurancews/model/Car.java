@@ -9,18 +9,13 @@ public class Car {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    @ManyToOne
+    @JoinColumn(name = "model", nullable = false)
+    private Model model;
 
-    @Column(name = "model", length = 100, nullable = false)
-    private String model;
+    @Column(name = "license_plate", length = 10, nullable = false, unique = true)
+    private String licensePlate;
 
-    @Column(name = "manufacturer", length = 100, nullable = false)
-    private String manufacturer;
-
-    @Column(name = "model_year", nullable = false)
-    private Integer modelYear;
-
-    @Column(name = "fipe_value", precision = 10, scale = 2, nullable = false)
-    private BigDecimal fipeValue;
     public Long getId() {
         return id;
     }
@@ -29,35 +24,19 @@ public class Car {
         this.id = id;
     }
 
-    public String getModel() {
+    public Model getModel() {
         return model;
     }
 
-    public void setModel(String model) {
+    public void setModel(Model model) {
         this.model = model;
     }
 
-    public String getManufacturer() {
-        return manufacturer;
+    public String getLicensePlate() {
+        return licensePlate;
     }
 
-    public void setManufacturer(String manufacturer) {
-        this.manufacturer = manufacturer;
-    }
-
-    public Integer getModelYear() {
-        return modelYear;
-    }
-
-    public void setModelYear(Integer modelYear) {
-        this.modelYear = modelYear;
-    }
-
-    public BigDecimal getFipeValue() {
-        return fipeValue;
-    }
-
-    public void setFipeValue(BigDecimal fipeValue) {
-        this.fipeValue = fipeValue;
+    public void setLicensePlate(String licensePlate) {
+        this.licensePlate = licensePlate;
     }
 }

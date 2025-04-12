@@ -20,16 +20,14 @@ import java.time.LocalDateTime;
 public class BudgetService {
     private final GenericMapper genericMapper;
     private final CustomerService customerService;
-    private final DriverService driverService;
     private final CarService carService;
     private final InsuranceRepository insuranceRepository;
     private final InsuranceCalculatorService insuranceCalculatorService;
     private final ClaimService claimService;
 
-    public BudgetService(GenericMapper genericMapper, CustomerService customerService, DriverService driverService, CarService carService, InsuranceRepository insuranceRepository, InsuranceCalculatorService insuranceCalculatorService, ClaimService claimService) {
+    public BudgetService(GenericMapper genericMapper, CustomerService customerService,CarService carService, InsuranceRepository insuranceRepository, InsuranceCalculatorService insuranceCalculatorService, ClaimService claimService) {
         this.genericMapper = genericMapper;
         this.customerService = customerService;
-        this.driverService = driverService;
         this.carService = carService;
         this.insuranceRepository = insuranceRepository;
         this.insuranceCalculatorService = insuranceCalculatorService;
@@ -38,11 +36,10 @@ public class BudgetService {
 
     @Transactional
     public BudgetDtoOut createBudget(BudgetDtoIn dto) {
-        Car car = carService.createCar(dto);
-        Driver driver = driverService.createDriver(dto, car);
-        Customer customer = customerService.createCustomer(dto.getCustomer(), driver);
-        RiskProfile riskProfile = getRiskProfile(driver, car, dto.getMainDriver());
-        InsuranceValue insuranceValue = insuranceCalculatorService.calculateInsuranceValue(car.getFipeValue(), riskProfile);
+        Car car = carService.returnCar(dto);
+        Customer customer = customerService.returnCustomer(dto, car);
+        RiskProfile riskProfile = getRiskProfile(customer.getDriver(), car, dto.getMainDriver());
+        InsuranceValue insuranceValue = insuranceCalculatorService.calculateInsuranceValue(car.getModel().getFipeValue(), riskProfile);
         Insurance insurance = Insurance.InsuranceBuilder.anInsurance()
                 .car(car).creationDate(LocalDateTime.now())
                 .customer(customer)

@@ -9,8 +9,6 @@ public class Driver {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @Column(name = "name", unique = true, nullable = false)
-    private String name;
     @Column(name = "document", unique = true, nullable = false)
     private String document;
 
@@ -39,13 +37,5 @@ public class Driver {
 
     public void setBirthdate(LocalDate birthdate) {
         this.birthdate = birthdate;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
     }
 }

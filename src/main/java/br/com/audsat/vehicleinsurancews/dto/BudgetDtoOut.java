@@ -1,6 +1,7 @@
 package br.com.audsat.vehicleinsurancews.dto;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.persistence.Column;
 
 import java.math.BigDecimal;
@@ -9,9 +10,10 @@ import java.time.LocalDateTime;
 
 public class BudgetDtoOut {
     private Long id;
-    private String nameDriver;
+    private String customerName;
     private String documentDriver;
     private Boolean isMainDriver;
+    @Schema(example = "20/02/2001")
     @JsonFormat(pattern = "dd/MM/yyyy", shape=JsonFormat.Shape.STRING, locale = "pt-BR", timezone = "America/Fortaleza")
     private LocalDate birthdateDriver;
     private String modelCar;
@@ -20,8 +22,10 @@ public class BudgetDtoOut {
     private BigDecimal fipeValueCar;
     private BigDecimal aliquot;
     private BigDecimal insuranceValue;
+    @Schema(example = "12/04/2025 22:31:33")
     @JsonFormat(pattern = "dd/MM/yyyy HH:mm:ss", shape=JsonFormat.Shape.STRING, locale = "pt-BR", timezone = "America/Fortaleza")
     private LocalDateTime creationDate;
+    @Schema(example = "12/04/2025 22:31:33")
     @JsonFormat(pattern = "dd/MM/yyyy HH:mm:ss", shape=JsonFormat.Shape.STRING, locale = "pt-BR", timezone = "America/Fortaleza")
     private LocalDateTime updatedAt;
 
@@ -33,12 +37,12 @@ public class BudgetDtoOut {
         this.id = id;
     }
 
-    public String getNameDriver() {
-        return nameDriver;
+    public String getCustomerName() {
+        return customerName;
     }
 
-    public void setNameDriver(String nameDriver) {
-        this.nameDriver = nameDriver;
+    public void setCustomerName(String customerName) {
+        this.customerName = customerName;
     }
 
     public String getDocumentDriver() {
