@@ -11,10 +11,12 @@ import br.com.audsat.vehicleinsurancews.model.Insurance;
 import br.com.audsat.vehicleinsurancews.model.valueobjects.InsuranceValue;
 import br.com.audsat.vehicleinsurancews.model.valueobjects.RiskProfile;
 import br.com.audsat.vehicleinsurancews.repository.InsuranceRepository;
+import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
+import java.util.Optional;
 
 @Service
 public class BudgetService {
@@ -25,7 +27,7 @@ public class BudgetService {
     private final InsuranceCalculatorService insuranceCalculatorService;
     private final ClaimService claimService;
 
-    public BudgetService(GenericMapper genericMapper, CustomerService customerService,CarService carService, InsuranceRepository insuranceRepository, InsuranceCalculatorService insuranceCalculatorService, ClaimService claimService) {
+    public BudgetService(GenericMapper genericMapper, CustomerService customerService, CarService carService, InsuranceRepository insuranceRepository, InsuranceCalculatorService insuranceCalculatorService, ClaimService claimService) {
         this.genericMapper = genericMapper;
         this.customerService = customerService;
         this.carService = carService;
@@ -60,9 +62,23 @@ public class BudgetService {
         Insurance insurance = insuranceRepository.findById(insuranceId).orElseThrow(() -> new NotFoundException("Budget not found! "));
         return genericMapper.toObject(insurance, BudgetDtoOut.class);
     }
+
     @Transactional
     public BudgetDtoOut updateBudget(Long insuranceId, BudgetDtoIn dto) {
-        return null;
+        Insurance target = insuranceRepository.findById(insuranceId).orElseThrow(() -> new NotFoundException("Budget not found! "));
+        Car car = carService.updateCar(dto, target.getCar());
+        Customer customer = customerService.updateCustomer(dto, target.getCustomer());
+        RiskProfile riskProfile = getRiskProfile(customer.getDriver(), car, dto.getMainDriver());
+        InsuranceValue insuranceValue = insuranceCalculatorService.calculateInsuranceValue(car.getModel().getFipeValue(), riskProfile);
+        Insurance source = Insurance.InsuranceBuilder.anInsurance()
+                .car(car).customer(customer)
+                .insuranceValue(insuranceValue.getValue())
+                .aliquot(insuranceValue.getAliquot())
+                .isActive(true).build();
+        BeanUtils.copyProperties(source, target, "id", "creationDate");
+        target.setUpdatedAt(LocalDateTime.now());
+        insuranceRepository.save(target);
+        return genericMapper.toObject(target, BudgetDtoOut.class);
     }
 
     @Transactional

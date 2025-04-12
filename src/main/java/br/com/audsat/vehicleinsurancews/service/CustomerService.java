@@ -9,6 +9,7 @@ import br.com.audsat.vehicleinsurancews.model.Driver;
 import br.com.audsat.vehicleinsurancews.repository.CarDriverRepository;
 import br.com.audsat.vehicleinsurancews.repository.CustomerRepository;
 import br.com.audsat.vehicleinsurancews.repository.DriverRepository;
+import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 
 import javax.swing.text.html.Option;
@@ -47,5 +48,19 @@ public class CustomerService {
         CarDriver carDriver = new CarDriver(car, driver, dto.getMainDriver());
         carDriverRepository.save(carDriver);
         return driver;
+    }
+
+    protected Customer updateCustomer(BudgetDtoIn dto, Customer target) {
+        updateDriver(dto, target.getDriver());
+        Customer source = genericMapper.toObject(dto, Customer.class);
+        BeanUtils.copyProperties(source, target, "id", "driver");
+        customerRepository.save(target);
+        return target;
+    }
+
+    private void updateDriver(BudgetDtoIn dto, Driver target) {
+        Driver source = genericMapper.toObject(dto, Driver.class);
+        BeanUtils.copyProperties(source, target, "id");
+        driverRepository.save(target);
     }
 }
