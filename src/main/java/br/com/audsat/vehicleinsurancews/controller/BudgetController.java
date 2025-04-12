@@ -27,24 +27,21 @@ public class BudgetController {
     }
 
     @Operation(summary = "Cadastrar orçamento")
-    @ApiResponses(value = {@ApiResponse(responseCode = "201", description = "Budget created successfully",
-            content = {@Content(mediaType = "application/json", schema = @Schema(implementation = BudgetDtoOut.class))})})
+    @ApiResponses(value = {@ApiResponse(responseCode = "201", description = "Budget created successfully")})
     @PostMapping
     public ResponseEntity<BudgetDtoOut> createBudget(@Valid @RequestBody BudgetDtoIn dto) {
         return ResponseEntity.status(HttpStatus.CREATED).body(budgetService.createBudget(dto));
     }
 
     @Operation(summary = "Consultar orçamento ")
-    @ApiResponses(value = {@ApiResponse(responseCode = "200", description = "Budget found successfully",
-            content = {@Content(mediaType = "application/json", schema = @Schema(implementation = BudgetDtoOut.class))})})
+    @ApiResponses(value = {@ApiResponse(responseCode = "200", description = "Budget found successfully")})
     @GetMapping("/{insuranceId}")
     public ResponseEntity<BudgetDtoOut> findBudgetByInsuranceId(@PathVariable Long insuranceId) {
         return ResponseEntity.status(HttpStatus.OK).body(budgetService.findBudgetByInsuranceId(insuranceId));
     }
 
     @Operation(summary = "Atualizar orçamento")
-    @ApiResponses(value = {@ApiResponse(responseCode = "200", description = "Budget updated successfully",
-            content = {@Content(mediaType = "application/json", schema = @Schema(implementation = BudgetDtoOut.class))})})
+    @ApiResponses(value = {@ApiResponse(responseCode = "200", description = "Budget updated successfully")})
     @PutMapping("/{insuranceId}")
     public ResponseEntity<BudgetDtoOut> updateBudget(@PathVariable Long insuranceId,
                                                      @Valid @RequestBody BudgetDtoIn dto) {
