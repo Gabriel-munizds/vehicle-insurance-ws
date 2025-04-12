@@ -3,6 +3,7 @@ package br.com.audsat.vehicleinsurancews.service;
 import br.com.audsat.vehicleinsurancews.config.mapper.GenericMapper;
 import br.com.audsat.vehicleinsurancews.dto.BudgetDtoIn;
 import br.com.audsat.vehicleinsurancews.dto.BudgetDtoOut;
+import br.com.audsat.vehicleinsurancews.exception.NotFoundException;
 import br.com.audsat.vehicleinsurancews.model.Car;
 import br.com.audsat.vehicleinsurancews.model.Customer;
 import br.com.audsat.vehicleinsurancews.model.Driver;
@@ -59,13 +60,17 @@ public class BudgetService {
     }
 
     public BudgetDtoOut findBudgetByInsuranceId(Long insuranceId) {
-        return null;
+        Insurance insurance = insuranceRepository.findById(insuranceId).orElseThrow(() -> new NotFoundException("Budget not found! "));
+        return genericMapper.toObject(insurance, BudgetDtoOut.class);
     }
-
+    @Transactional
     public BudgetDtoOut updateBudget(Long insuranceId, BudgetDtoIn dto) {
         return null;
     }
 
+    @Transactional
     public void deleteBudgetByInsuranceId(Long insuranceId) {
+        Insurance insurance = insuranceRepository.findById(insuranceId).orElseThrow(() -> new NotFoundException("Budget not found! "));
+        insuranceRepository.delete(insurance);
     }
 }
