@@ -100,4 +100,33 @@ public class PojoFactory {
                 new BigDecimal("3.33")
         );
     }
+
+    public static RiskProfile createRiskProfileWithYoungDriverRisk() {
+        return new RiskProfile(
+                LocalDate.now().minusYears(20),
+                true,
+                false,
+                false
+        );
+    }
+
+    public static RiskProfile createRiskProfileWithYoungDriverRiskAndDriverClaimsRisk() {
+        return new RiskProfile(
+                LocalDate.now().minusYears(20),
+                true,
+                true,
+                false
+        );
+    }
+
+    public static RiskProfile createRiskProfileWithYoungDriverRiskAndDriverClaimsRiskAndVehicleClaimsRisk() {
+        return new RiskProfile(
+                LocalDate.now().minusYears(20),
+                true,
+                true,
+                true
+        );
+    }
+
+
 }
