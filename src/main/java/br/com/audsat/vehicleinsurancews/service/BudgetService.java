@@ -52,7 +52,7 @@ public class BudgetService {
         return genericMapper.toObject(insurance, BudgetDtoOut.class);
     }
 
-    private RiskProfile getRiskProfile(Driver driver, Car car, Boolean mainDriver) {
+    protected RiskProfile getRiskProfile(Driver driver, Car car, Boolean mainDriver) {
         Boolean hasDriverClaims = claimService.hasDriverClaims(driver);
         Boolean hasVehicleClaims = claimService.hasVehicleClaims(car);
         return new RiskProfile(driver.getBirthdate(), mainDriver, hasDriverClaims, hasVehicleClaims);
