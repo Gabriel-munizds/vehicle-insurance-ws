@@ -26,6 +26,7 @@ public class PojoFactory {
         dto.setManufacturerModelCar("Toyota");
         dto.setModelYearCar(2023);
         dto.setFipeCodeModelCar("12345678");
+        dto.setFuelType(1);
         dto.setFipeValueModelCar(new BigDecimal("150000.00"));
         return dto;
     }
