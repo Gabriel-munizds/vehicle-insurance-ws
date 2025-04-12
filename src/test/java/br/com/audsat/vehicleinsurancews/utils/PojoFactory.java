@@ -110,6 +110,14 @@ public class PojoFactory {
                 false
         );
     }
+    public static RiskProfile createRiskProfileWithYoungDriverRiskButIsNotMainDriver() {
+        return new RiskProfile(
+                LocalDate.now().minusYears(20),
+                false,
+                false,
+                false
+        );
+    }
 
     public static RiskProfile createRiskProfileWithYoungDriverRiskAndDriverClaimsRisk() {
         return new RiskProfile(
