@@ -2,8 +2,7 @@ package br.com.audsat.vehicleinsurancews.service;
 
 import br.com.audsat.vehicleinsurancews.model.valueobjects.InsuranceValue;
 import br.com.audsat.vehicleinsurancews.model.valueobjects.RiskProfile;
-import br.com.audsat.vehicleinsurancews.utils.PojoFactory;
-import org.junit.jupiter.api.BeforeEach;
+import br.com.audsat.vehicleinsurancews.useful.PojoFactory;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;

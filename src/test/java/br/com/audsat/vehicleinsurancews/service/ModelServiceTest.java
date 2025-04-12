@@ -4,7 +4,7 @@ import br.com.audsat.vehicleinsurancews.config.mapper.GenericMapper;
 import br.com.audsat.vehicleinsurancews.dto.BudgetDtoIn;
 import br.com.audsat.vehicleinsurancews.model.Model;
 import br.com.audsat.vehicleinsurancews.repository.ModelRepository;
-import br.com.audsat.vehicleinsurancews.utils.PojoFactory;
+import br.com.audsat.vehicleinsurancews.useful.PojoFactory;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;

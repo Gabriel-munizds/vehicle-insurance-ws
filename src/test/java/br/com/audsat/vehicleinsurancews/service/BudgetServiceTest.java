@@ -5,8 +5,6 @@ import static org.mockito.ArgumentMatchers.*;
 import static org.mockito.Mockito.*;
 
 import java.math.BigDecimal;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.Optional;
 
 import br.com.audsat.vehicleinsurancews.config.mapper.GenericMapper;
@@ -17,7 +15,7 @@ import br.com.audsat.vehicleinsurancews.model.*;
 import br.com.audsat.vehicleinsurancews.model.valueobjects.InsuranceValue;
 import br.com.audsat.vehicleinsurancews.model.valueobjects.RiskProfile;
 import br.com.audsat.vehicleinsurancews.repository.InsuranceRepository;
-import br.com.audsat.vehicleinsurancews.utils.PojoFactory;
+import br.com.audsat.vehicleinsurancews.useful.PojoFactory;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;

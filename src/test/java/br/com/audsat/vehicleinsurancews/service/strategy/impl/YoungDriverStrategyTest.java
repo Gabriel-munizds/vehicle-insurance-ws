@@ -1,20 +1,15 @@
 package br.com.audsat.vehicleinsurancews.service.strategy.impl;
 
 import br.com.audsat.vehicleinsurancews.model.valueobjects.RiskProfile;
-import br.com.audsat.vehicleinsurancews.utils.PojoFactory;
+import br.com.audsat.vehicleinsurancews.useful.PojoFactory;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.math.BigDecimal;
-import java.time.LocalDate;
-import java.time.Period;
-
-import static org.junit.jupiter.api.Assertions.*;
 
 @ExtendWith(MockitoExtension.class)
 class YoungDriverStrategyTest {

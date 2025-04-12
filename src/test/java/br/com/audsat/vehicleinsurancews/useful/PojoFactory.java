@@ -1,4 +1,4 @@
-package br.com.audsat.vehicleinsurancews.utils;
+package br.com.audsat.vehicleinsurancews.useful;
 
 import br.com.audsat.vehicleinsurancews.dto.BudgetDtoIn;
 import br.com.audsat.vehicleinsurancews.dto.BudgetDtoOut;
