@@ -2,6 +2,7 @@ package br.com.audsat.vehicleinsurancews.useful;
 
 import br.com.audsat.vehicleinsurancews.dto.BudgetDtoIn;
 import br.com.audsat.vehicleinsurancews.dto.BudgetDtoOut;
+import br.com.audsat.vehicleinsurancews.dto.LoginFormDTO;
 import br.com.audsat.vehicleinsurancews.model.*;
 import br.com.audsat.vehicleinsurancews.model.valueobjects.InsuranceValue;
 import br.com.audsat.vehicleinsurancews.model.valueobjects.RiskProfile;
@@ -139,4 +140,7 @@ public class PojoFactory {
     }
 
 
+    public static LoginFormDTO createValidUser() {
+        return new LoginFormDTO("teste", "teste");
+    }
 }
