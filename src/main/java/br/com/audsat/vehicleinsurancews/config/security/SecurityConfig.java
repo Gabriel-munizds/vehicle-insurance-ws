@@ -46,8 +46,10 @@ public class SecurityConfig {
                                 "/swagger-resources",
                                 "/webjars/**",
                                 "/login",
+                                "/h2-console/**",
                                 "/signup").permitAll()
-                        .anyRequest().authenticated())
+                        .anyRequest().authenticated()).headers(headers -> headers
+                        .frameOptions(frame -> frame.sameOrigin()))
                 .csrf(AbstractHttpConfigurer::disable)
                 .oauth2ResourceServer(oauth2 -> oauth2.jwt(Customizer.withDefaults()))
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS));
