@@ -1,0 +1,337 @@
+openapi: 3.1.0
+info:
+  title: JavaInUse Authentication Service
+servers:
+- url: http://localhost:8080/insurance
+  description: Generated server url
+security:
+- JavaInUseSecurityScheme: []
+tags:
+- name: Budget Controller
+  description: Endpoints para orçamentos
+- name: Auth Controller
+  description: Endpoint para gerar token jwt
+paths:
+  /budget/{insuranceId}:
+    get:
+      tags:
+      - Budget Controller
+      summary: 'Consultar orçamento '
+      operationId: findBudgetByInsuranceId
+      parameters:
+      - name: insuranceId
+        in: path
+        required: true
+        schema:
+          type: integer
+          format: int64
+      responses:
+        "409":
+          description: Conflict
+          content:
+            '*/*':
+              schema:
+                type: string
+        "404":
+          description: Not Found
+          content:
+            '*/*':
+              schema:
+                type: string
+        "200":
+          description: Budget found successfully
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/BudgetDtoOut"
+    put:
+      tags:
+      - Budget Controller
+      summary: Atualizar orçamento
+      operationId: updateBudget
+      parameters:
+      - name: insuranceId
+        in: path
+        required: true
+        schema:
+          type: integer
+          format: int64
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/BudgetDtoIn"
+        required: true
+      responses:
+        "409":
+          description: Conflict
+          content:
+            '*/*':
+              schema:
+                type: string
+        "404":
+          description: Not Found
+          content:
+            '*/*':
+              schema:
+                type: string
+        "200":
+          description: Budget updated successfully
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/BudgetDtoOut"
+    delete:
+      tags:
+      - Budget Controller
+      summary: Remover orçamento
+      operationId: deleteBudgetByInsuranceId
+      parameters:
+      - name: insuranceId
+        in: path
+        required: true
+        schema:
+          type: integer
+          format: int64
+      responses:
+        "409":
+          description: Conflict
+          content:
+            '*/*':
+              schema:
+                type: string
+        "404":
+          description: Not Found
+          content:
+            '*/*':
+              schema:
+                type: string
+        "204":
+          description: Budget removed successfully
+          content:
+            '*/*':
+              schema:
+                type: object
+  /signup:
+    post:
+      tags:
+      - Auth Controller
+      summary: Rota para que o usuario se cadastre para poder ter acesso ao token
+        de autenticação para consumir os endpoints
+      operationId: signup
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/LoginFormDTO"
+        required: true
+      responses:
+        "409":
+          description: Conflict
+          content:
+            '*/*':
+              schema:
+                type: string
+        "404":
+          description: Not Found
+          content:
+            '*/*':
+              schema:
+                type: string
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/UserDTO"
+  /login:
+    post:
+      tags:
+      - Auth Controller
+      summary: Adquirir token JWT a partir das credenciais do signup
+      operationId: login
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/LoginFormDTO"
+        required: true
+      responses:
+        "409":
+          description: Conflict
+          content:
+            '*/*':
+              schema:
+                type: string
+        "404":
+          description: Not Found
+          content:
+            '*/*':
+              schema:
+                type: string
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/TokenDTO"
+  /budget:
+    post:
+      tags:
+      - Budget Controller
+      summary: Cadastrar orçamento
+      operationId: createBudget
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/BudgetDtoIn"
+        required: true
+      responses:
+        "409":
+          description: Conflict
+          content:
+            '*/*':
+              schema:
+                type: string
+        "404":
+          description: Not Found
+          content:
+            '*/*':
+              schema:
+                type: string
+        "201":
+          description: Budget created successfully
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/BudgetDtoOut"
+components:
+  schemas:
+    BudgetDtoIn:
+      type: object
+      properties:
+        customerName:
+          type: string
+          description: Nome do cliente
+          example: Ricardo Luiz Almada
+        driverDocument:
+          type: string
+          description: Número do documento de habilitação do motorista
+          example: 68416487272
+        birthdateDriver:
+          type: string
+          format: date
+          description: Data de nascimento do motorista
+          example: 15/03/1993
+        licensePlate:
+          type: string
+          description: Placa do veículo
+          example: AAA1A11
+        modelCar:
+          type: string
+          description: Descrição do modelo do veículo
+          example: Palio 1.0/ Trofeo 1.0 Fire/ Fire Flex 4p
+        fipeCodeModelCar:
+          type: string
+          description: código fipe da marca/modelo do veículo
+          example: "0011770"
+        manufacturerModelCar:
+          type: string
+          description: Fabricante do modelo do veículo
+          example: Fiat
+        modelYearCar:
+          type: integer
+          format: int32
+          description: Ano do modelo
+          example: 2017
+        fuelType:
+          type: integer
+          format: int32
+          description: "código do tipo de combustível do veículo. 1 - Gasolina; 2\
+            \ - Álcool, 3 - Diesel"
+          example: 1
+        fipeValueModelCar:
+          type: number
+          description: Valor Fipe atual do veículo. (utilizado somente em caso de
+            não existência do modelo na base de dados)
+          example: 33184
+        mainDriver:
+          type: boolean
+      required:
+      - birthdateDriver
+      - customerName
+      - driverDocument
+      - fipeCodeModelCar
+      - fipeValueModelCar
+      - fuelType
+      - licensePlate
+      - manufacturerModelCar
+      - modelCar
+      - modelYearCar
+    BudgetDtoOut:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+        customerName:
+          type: string
+        documentDriver:
+          type: string
+        birthdateDriver:
+          type: string
+          format: date
+          example: 20/02/2001
+        modelCar:
+          type: string
+        manufacturerCar:
+          type: string
+        modelYearCar:
+          type: integer
+          format: int32
+        fipeValueCar:
+          type: number
+        aliquot:
+          type: number
+        insuranceValue:
+          type: number
+        creationDate:
+          type: string
+          format: date-time
+          example: 12/04/2025 22:31:33
+        updatedAt:
+          type: string
+          format: date-time
+          example: 12/04/2025 22:31:33
+        mainDriver:
+          type: boolean
+    LoginFormDTO:
+      type: object
+      properties:
+        login:
+          type: string
+        password:
+          type: string
+    UserDTO:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+        login:
+          type: string
+    TokenDTO:
+      type: object
+      properties:
+        acessToken:
+          type: string
+        expiresIn:
+          type: integer
+          format: int64
+  securitySchemes:
+    JavaInUseSecurityScheme:
+      type: http
+      name: JavaInUseSecurityScheme
+      scheme: bearer
+      bearerFormat: JWT
