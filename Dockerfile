@@ -7,4 +7,8 @@ RUN mvn clean package -Dspring.profiles.active=test
 
 FROM openjdk:17-jdk-slim
 COPY --from=build /app/target/*.jar app.jar
+COPY --from=build /app/target/classes/*.key .
+COPY --from=build /app/target/classes/*.pub .
+
+
 ENTRYPOINT ["java","-jar","/app.jar"]
