@@ -1,5 +1,6 @@
 package br.com.audsat.vehicleinsurancews.config.handler;
 
+import br.com.audsat.vehicleinsurancews.exception.BusinessException;
 import br.com.audsat.vehicleinsurancews.exception.NotFoundException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -22,6 +23,14 @@ public class GenericHandler {
     @ExceptionHandler(BadCredentialsException.class)
     @ResponseStatus(code = HttpStatus.CONFLICT)
     public ResponseEntity<String> handlerBannerBadCredentialsException(BadCredentialsException e) {
+        ResponseEntity<String> response = ResponseEntity.status(HttpStatus.CONFLICT).body(e.getMessage());
+        e.printStackTrace();
+        return response;
+    }
+
+    @ExceptionHandler(BusinessException.class)
+    @ResponseStatus(code = HttpStatus.CONFLICT)
+    public ResponseEntity<String> handlerBannerBusinessException(BusinessException e) {
         ResponseEntity<String> response = ResponseEntity.status(HttpStatus.CONFLICT).body(e.getMessage());
         e.printStackTrace();
         return response;
